@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\User\Lesson;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Lesson\CreateRequest;
+use App\Http\Requests\Lesson\UpdateRequest;
 use App\Models\Lesson;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LessonController extends Controller
 {
@@ -26,7 +29,7 @@ class LessonController extends Controller
      */
     public function create()
     {
-        //
+        return view('lesson.create');
     }
 
     /**
@@ -35,9 +38,13 @@ class LessonController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateRequest $request, Lesson $lesson)
     {
-        //
+        $validated = $request->validated();
+        $lesson->title = $validated['title'];
+        $lesson->description = $validated['description'];
+        $lesson->save();
+        return redirect()->back();
     }
 
     /**
@@ -52,26 +59,20 @@ class LessonController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, int $id)
     {
-        //
+        $validated = $request->validated();
+        $lesson = lesson::where('id', $id)->update([
+            'title' => $validated['title'],
+            'description' => $validated['description'],
+        ]);
+        return redirect()->back();
     }
 
     /**
@@ -82,6 +83,7 @@ class LessonController extends Controller
      */
     public function destroy($id)
     {
-        //
+        lesson::find($id)->delete();
+        return redirect(route('lesson.index'));
     }
 }

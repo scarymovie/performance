@@ -23,13 +23,18 @@
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('lesson.index') }}" :active="request()->routeIs('lesson.index')">
-                        {{ __('Уроки') }}
+                        {{ __('Курсы') }}
                     </x-jet-nav-link>
                 </div>
                 @hasanyrole('manager|admin')
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('admin.create') }}" :active="request()->routeIs('admin.create')">
                         {{ __('Создать пост') }}
+                    </x-jet-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-jet-nav-link href="{{ route('lesson.create') }}" :active="request()->routeIs('lesson.create')">
+                        {{ __('Создать урок') }}
                     </x-jet-nav-link>
                 </div>
                 @endhasanyrole

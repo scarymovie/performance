@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\Post\PostController as AdminPostControllerAlias;
 use App\Http\Controllers\User\Lesson\LessonController;
+use App\Http\Controllers\User\Part\PartController;
 use App\Http\Controllers\user\Post\PostController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +28,10 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
     Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
+
+    /*Route::get('/{lesson}/part',[PartController::class, 'index'])->name('part.index');*/
+
+    Route::resource('part', PartController::class);
 
     Route::resource('lesson', LessonController::class );
 
